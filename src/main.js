@@ -20,7 +20,8 @@ const routes = [
 
 //实例router
 const router = new VueRouter({
-  routes
+  routes,
+  linkActiveClass:"active"
 })
 
 
