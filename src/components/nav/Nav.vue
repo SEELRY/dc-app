@@ -1,6 +1,8 @@
 <template>
     <div class="nav">
-        
+        <router-link class="nav-item" to="/goods">点餐</router-link>
+        <router-link class="nav-item" to="/ratings">评价</router-link>
+        <router-link class="nav-item" to="/seller">商家</router-link>
     </div>
 </template>
 
