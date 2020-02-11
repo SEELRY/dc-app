@@ -66,6 +66,10 @@
                 <div class="icon" :style="head_bg"></div>
                 <h3 class="name">{{poiInfo.name}}</h3>
                 <!-- 星级评价 -->
+                <div class="score">
+                  <app-star :score="poiInfo.wm_poi_score"></app-star>
+                  <span>{{poiInfo.wm_poi_score}}</span>
+                </div>
 
                 <p class="tip">
                   {{poiInfo.min_price_tip}} <i>|</i> {{poiInfo.shipping_fee_tip}} <i>|</i> {{poiInfo.delivery_time_tip}}
@@ -95,11 +99,16 @@
 </template>
 
 <script>
+import Star from '../star/star'
+
 export default {
     data(){
       return{
         isShow:false
       }
+    },
+    components:{
+      "app-star":Star
     },
     props:{
         poiInfo:{
