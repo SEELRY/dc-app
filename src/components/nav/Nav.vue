@@ -47,14 +47,14 @@ export default {
 
 /* 选中下面的下划线 */
 .nav .active .line{
-    width: 20px;
+    width: 30px;
     height: 2px;
     display: inline-block;
     background: #ffbb22;
     position: absolute;
     left: 50%;
     bottom: 0;
-    margin-left: -10px;
+    margin-left: -15px;
 }
 
 </style>

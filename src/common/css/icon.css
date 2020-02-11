@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'dc-app';
-  src:  url('fonts/dc-app.eot?s7uk12');
-  src:  url('fonts/dc-app.eot?s7uk12#iefix') format('embedded-opentype'),
-    url('fonts/dc-app.ttf?s7uk12') format('truetype'),
-    url('fonts/dc-app.woff?s7uk12') format('woff'),
-    url('fonts/dc-app.svg?s7uk12#dc-app') format('svg');
+  src:  url('../fonts/dc-app.eot?s7uk12');
+  src:  url('../fonts/dc-app.eot?s7uk12#iefix') format('embedded-opentype'),
+    url('../fonts/dc-app.ttf?s7uk12') format('truetype'),
+    url('../fonts/dc-app.woff?s7uk12') format('woff'),
+    url('../fonts/dc-app.svg?s7uk12#dc-app') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
