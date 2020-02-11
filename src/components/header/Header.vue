@@ -133,7 +133,7 @@ export default {
 <style scoped>
 @import url(../../common/css/icon.css);
 .header{
-    height: 160px;
+    height: 130px;
     padding-top: 20px;
 }
 /* 顶部通栏样式 */
