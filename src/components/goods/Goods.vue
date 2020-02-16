@@ -4,14 +4,16 @@
         <div class="menu-wrapper" ref="menuScroll">
             <ul>
                 <!-- 专场 -->
-                <li class="menu-item">
+                <li class="menu-item" :class="{'current':currentIndex === 0}" 
+                @click="selectMenu(0)">
                     <p class="text">
                         <img class="icon" :src="container.tag_icon" v-if="container.tag_icon"  alt="">
                         {{container.tag_name}}
                     </p>
                 </li>
 
-                <li class="menu-item" v-for="(item,index) in goods" :key="index">
+                <li class="menu-item" :class="{'current':currentIndex === index + 1}" v-for="(item,index) in goods" :key="index" 
+                @click="selectMenu(index+1)">
                     <p class="text">
                         <img class="icon" :src="item.icon" v-if="item.icon"  alt="">
                         {{item.name}}
@@ -64,7 +66,10 @@ export default {
         return{
             container:{},
             goods:[],
-            listHeight:[]
+            listHeight:[],
+            menuScroll:{},
+            foodScroll:{},
+            scrollY:0
         }
     },
     methods:{
@@ -72,22 +77,32 @@ export default {
             return "background-image:url(" + imgName + ");"
         },
         initScroll(){
-            new BScroll(this.$refs.menuScroll);
-            new BScroll(this.$refs.foodScroll);
+            this.menuScroll = new BScroll(this.$refs.menuScroll)
+            this.foodScroll = new BScroll(this.$refs.foodScroll,{probeType:3})
+
+            //foodScroll监听事件
+            this.foodScroll.on("scroll",(pos) => {
+                // console.log(pos.y);
+                this.scrollY = Math.abs(Math.round(pos.y))
+                // console.log(this.scrollY);
+            })
         },
         calculateHeight(){
-            let foodlist = this.$refs.foodScroll.getElementsByClassName("food-list-hook");
+            let foodlist = this.$refs.foodScroll.getElementsByClassName("food-list-hook")
             // console.log(foodlist);
             
-            let height = 0;
-            this.listHeight.push(height);
+            let height = 0
+            this.listHeight.push(height)
             for(let i = 0; i<foodlist.length; i++){
-                let item = foodlist[i];
-                height += item.clientHeight;
-                this.listHeight.push(height);
+                let item = foodlist[i]
+                height += item.clientHeight
+                this.listHeight.push(height)
             }
-            // console.log(this.listHeight);
+            // console.log(this.listHeight)
 
+        },
+        selectMenu(index){
+            console.log(index);
         }
     },
     created(){
@@ -117,6 +132,22 @@ export default {
             })
             }
         })
+    },
+    computed:{
+        currentIndex(){
+            for(let i=0; i<this.listHeight.length; i++){
+                //获取商品区间的范围
+                let height1 = this.listHeight[i]
+                let height2 = this.listHeight[i+1]
+
+                //是否在上述区间中
+                if(!height2 || (this.scrollY >= height1 && this.scrollY < height2)){
+                    // console.log(i)
+                    return i
+                }
+            }
+            return 0
+        }
     }
 }
 </script>
