@@ -23,14 +23,14 @@
         <div class="foods-wrapper" ref="foodScroll">
             <ul>
                 <!-- 专场 -->
-                <li class="container-list">
+                <li class="container-list food-list-hook">
                     <div v-for="(item,index) in container.operation_source_list" :key="index">
                         <img :src="item.pic_url" alt="">
                     </div>
                 </li>
 
                 <!-- 具体分类 -->
-                <li class="food-list" v-for="(item,index) in goods" :key="index">
+                <li class="food-list food-list-hook" v-for="(item,index) in goods" :key="index">
                     <h3 class="title">{{item.name}}</h3>
                     <!-- 具体商品列表 -->
                     <ul>
@@ -63,7 +63,8 @@ export default {
     data(){
         return{
             container:{},
-            goods:[]
+            goods:[],
+            listHeight:[]
         }
     },
     methods:{
@@ -71,8 +72,22 @@ export default {
             return "background-image:url(" + imgName + ");"
         },
         initScroll(){
-            new BScroll(this.$refs.menuScroll)
-            new BScroll(this.$refs.foodScroll)
+            new BScroll(this.$refs.menuScroll);
+            new BScroll(this.$refs.foodScroll);
+        },
+        calculateHeight(){
+            let foodlist = this.$refs.foodScroll.getElementsByClassName("food-list-hook");
+            // console.log(foodlist);
+            
+            let height = 0;
+            this.listHeight.push(height);
+            for(let i = 0; i<foodlist.length; i++){
+                let item = foodlist[i];
+                height += item.clientHeight;
+                this.listHeight.push(height);
+            }
+            // console.log(this.listHeight);
+
         }
     },
     created(){
@@ -88,8 +103,18 @@ export default {
             // console.log(this.container)
             // console.log(this.goods)
             
-            //执行滚动方法
-            this.initScroll()
+            // DOM渲染成功后才会执行此方法
+            this.$nextTick(() => {
+                //执行滚动方法
+                this.initScroll()
+
+                //右侧滚动联动左侧菜单
+                // 1.计算分类的区间高度
+                this.calculateHeight()
+                // 2.监听滚动的位置
+                // 3.根据滚动位置确认下标,与左侧对应
+                // 通过下标实现点击左侧,滚动右侧
+            })
             }
         })
     }
